@@ -283,7 +283,7 @@ Napi::Value PtyFork(const Napi::CallbackInfo& info) {
   // env
   Napi::Array env_ = info[2].As<Napi::Array>();
   int envc = env_.Length();
-  std::unique_ptr<char *, DelBuf> env_unique_ptr(new char *[envc + 1], DelBuf(envc + 1));
+  std::unique_ptr<char *, DelBuf> env_unique_ptr(new char *[envc + 1](), DelBuf(envc + 1));
   char **env = env_unique_ptr.get();
   env[envc] = NULL;
   for (int i = 0; i < envc; i++) {
@@ -353,7 +353,7 @@ Napi::Value PtyFork(const Napi::CallbackInfo& info) {
 #if defined(__APPLE__)
   int argc = argv_.Length();
   int argl = argc + 4;
-  std::unique_ptr<char *, DelBuf> argv_unique_ptr(new char *[argl], DelBuf(argl));
+  std::unique_ptr<char *, DelBuf> argv_unique_ptr(new char *[argl](), DelBuf(argl));
   char **argv = argv_unique_ptr.get();
   argv[0] = strdup(helper_path.c_str());
   argv[1] = strdup(cwd_.c_str());
@@ -375,7 +375,7 @@ Napi::Value PtyFork(const Napi::CallbackInfo& info) {
 #else
   int argc = argv_.Length();
   int argl = argc + 2;
-  std::unique_ptr<char *, DelBuf> argv_unique_ptr(new char *[argl], DelBuf(argl));
+  std::unique_ptr<char *, DelBuf> argv_unique_ptr(new char *[argl](), DelBuf(argl));
   char** argv = argv_unique_ptr.get();
   argv[0] = strdup(file.c_str());
   argv[argl - 1] = NULL;
